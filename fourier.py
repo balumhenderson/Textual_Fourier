@@ -1,31 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import signalGenerator as sg
 
 plt.style.use("seaborn-poster")
 
 sample_rate = 512
 time_step = 1.0 / sample_rate
 time_axis = np.arange(0, 1, time_step)
-
-
-class CosineWave:
-    def __init__(self, frequency=1, amplitude=1, phase=0):
-        self.frequency = frequency
-        self.amplitude = amplitude
-        self.phase = phase
-
-    def describe(self):
-        print(
-            f"The frequency of this wave is {self.frequency}, it's amplitude is {self.amplitude} and it has a phase of {self.phase} radians."
-        )
-
-    def series(self, time_axis):
-        return self.amplitude * np.cos(
-            2 * np.pi * self.frequency * time_axis + self.phase
-        )
-
-    def plot(self, ax, time_axis, label=None, color="b"):
-        ax.plot(time_axis, self.series(time_axis), label=label, color=color, lw=0.8)
 
 
 def fft(signal):
@@ -62,19 +43,7 @@ def freqAnalysis(data, sample_rate):
     return freq
 
 
-# Define the input waves
-inputs = [
-    CosineWave(3, 1, -0.5 * np.pi),
-    CosineWave(1, 4, -0.5 * np.pi),
-    CosineWave(0.5, 7, -0.5 * np.pi),
-]
-
-# Sum the input waves into a single input series
-linear_signal = (
-    inputs[0].series(time_axis)
-    + inputs[1].series(time_axis)
-    + inputs[2].series(time_axis)
-)
+linear_signal, input_waves = sg.signalGenerator(time_axis)
 
 # Fourier transform
 output = fft(linear_signal)
@@ -91,10 +60,6 @@ ax1 = plt.subplot(321)
 ax2 = plt.subplot(323, projection="polar")
 ax3 = plt.subplot(325)
 ax4 = plt.subplot(326)
-
-inputs[0].plot(ax1, time_axis)
-inputs[1].plot(ax1, time_axis)
-inputs[2].plot(ax1, time_axis)
 
 ax1.plot(time_axis, linear_signal, label="Input Sum", color="r")
 ax1.set_xlabel("Time (s)")
