@@ -57,7 +57,7 @@ output_normalised = output[:half] / half
 
 fig = plt.figure()
 ax1 = plt.subplot(321)
-ax2 = plt.subplot(323, projection="polar")
+ax2 = plt.subplot(322, projection="polar")
 ax3 = plt.subplot(325)
 ax4 = plt.subplot(326)
 
@@ -75,8 +75,6 @@ ax3.set_ylabel("FFT Amplitude |X(freq)|")
 ax4.stem(frequencies_oneside, abs(output_normalised), "b", markerfmt=" ", basefmt="-b")
 ax4.set_xlabel("Freq (Hz)")
 ax4.set_ylabel("Normalized FFT Amplitude |X(freq)|")
-ax4.set_xlim(0, 50)
-
-print(abs(output_normalised))
+ax4.set_xlim(0, 12)
 
 plt.show()

@@ -24,8 +24,8 @@ class CosineWave:
 
 def randWave():
     frequency, amplitude, phase = (
-        10 * rand.random(),
-        rand.randint(1, 5),
+        rand.randint(1, 8),
+        rand.randint(1, 8),
         2 * np.pi * rand.random(),
     )
     return CosineWave(frequency, amplitude, phase)
