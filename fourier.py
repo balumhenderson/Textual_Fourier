@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import signalGenerator as sg
 
-plt.style.use("seaborn-poster")
 
 sample_rate = 512
 time_step = 1.0 / sample_rate
@@ -53,28 +51,30 @@ frequencies_oneside = frequencies[:half]
 output_normalised = output[:half] / half
 
 
-########## Plotting ###########
+# %% ####### Plotting ###########
+import plotext as plo
 
-fig = plt.figure()
-ax1 = plt.subplot(321)
-ax2 = plt.subplot(322, projection="polar")
-ax3 = plt.subplot(325)
-ax4 = plt.subplot(326)
+plo.subplots(3, 1)
+plo.plotsize(100, 100)
 
-ax1.plot(time_axis, linear_signal, label="Input Sum", color="r")
-ax1.set_xlabel("Time (s)")
-ax1.set_ylabel("Signal (a.u.)")
-ax1.set_title("Linear representation of signal")
+plo.subplot(1, 1)
+plo.scatter(time_axis, linear_signal)
+plo.xlabel("Time (s)")
+plo.ylabel("Signal (a.u.)")
+plo.title("Random Signal")
+plo.xticks([0.2 * i for i in range(5)])
+plo.yticks([4 * i for i in range(-4, 5)])
 
-ax2.plot(time_axis, linear_signal, color="r")
+plo.subplot(2, 1)
 
-ax3.stem(frequencies, abs(output), "b", markerfmt=" ", basefmt="-b")
-ax3.set_xlabel("Freq (Hz)")
-ax3.set_ylabel("FFT Amplitude |X(freq)|")
+plo.plot(frequencies_oneside, abs(output_normalised))
+plo.xlim(0, 10)
+plo.xlabel("Frequency (Hz)")
+plo.ylabel("Normalised Amplitude (a.u.)")
+plo.title("FFT Results")
+plo.xticks([2 * i for i in range(8)])
+plo.yticks([2 * i for i in range(6)])
 
-ax4.stem(frequencies_oneside, abs(output_normalised), "b", markerfmt=" ", basefmt="-b")
-ax4.set_xlabel("Freq (Hz)")
-ax4.set_ylabel("Normalized FFT Amplitude |X(freq)|")
-ax4.set_xlim(0, 12)
+plo.subplot(3, 1)
 
-plt.show()
+plo.show()
