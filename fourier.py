@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import signalGenerator as sg
 
 plt.style.use("seaborn-poster")
@@ -43,38 +44,40 @@ def freqAnalysis(data, sample_rate):
     return freq
 
 
-linear_signal, input_waves = sg.signalGenerator(time_axis)
+if __name__ == "__main__":
+    linear_signal, input_waves = sg.signalGenerator(time_axis)
 
-# Fourier transform
-output = fft(linear_signal)
-frequencies = freqAnalysis(output, sample_rate)
-half = len(output) // 2
-frequencies_oneside = frequencies[:half]
-output_normalised = output[:half] / half
+    # Fourier transform
+    output = fft(linear_signal)
+    frequencies = freqAnalysis(output, sample_rate)
+    half = len(output) // 2
+    frequencies_oneside = frequencies[:half]
+    output_normalised = output[:half] / half
 
+    ########## Plotting ###########
 
-########## Plotting ###########
+    fig = plt.figure()
+    ax1 = plt.subplot(321)
+    ax2 = plt.subplot(322, projection="polar")
+    ax3 = plt.subplot(325)
+    ax4 = plt.subplot(326)
 
-fig = plt.figure()
-ax1 = plt.subplot(321)
-ax2 = plt.subplot(322, projection="polar")
-ax3 = plt.subplot(325)
-ax4 = plt.subplot(326)
+    ax1.plot(time_axis, linear_signal, label="Input Sum", color="r")
+    ax1.set_xlabel("Time (s)")
+    ax1.set_ylabel("Signal (a.u.)")
+    ax1.set_title("Linear representation of signal")
 
-ax1.plot(time_axis, linear_signal, label="Input Sum", color="r")
-ax1.set_xlabel("Time (s)")
-ax1.set_ylabel("Signal (a.u.)")
-ax1.set_title("Linear representation of signal")
+    ax2.plot(time_axis, linear_signal, color="r")
 
-ax2.plot(time_axis, linear_signal, color="r")
+    ax3.stem(frequencies, abs(output), "b", markerfmt=" ", basefmt="-b")
+    ax3.set_xlabel("Freq (Hz)")
+    ax3.set_ylabel("FFT Amplitude |X(freq)|")
 
-ax3.stem(frequencies, abs(output), "b", markerfmt=" ", basefmt="-b")
-ax3.set_xlabel("Freq (Hz)")
-ax3.set_ylabel("FFT Amplitude |X(freq)|")
+    ax4.stem(
+        frequencies_oneside, abs(output_normalised), "b", markerfmt=" ", basefmt="-b"
+    )
+    ax4.set_xlabel("Freq (Hz)")
+    ax4.set_ylabel("Normalized FFT Amplitude |X(freq)|")
+    ax4.set_xlim(0, 12)
 
-ax4.stem(frequencies_oneside, abs(output_normalised), "b", markerfmt=" ", basefmt="-b")
-ax4.set_xlabel("Freq (Hz)")
-ax4.set_ylabel("Normalized FFT Amplitude |X(freq)|")
-ax4.set_xlim(0, 12)
-
-plt.show()
+    plt.show()
