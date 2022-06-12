@@ -1,7 +1,7 @@
 
 # Textual Fourier
 
-  
+
 
 ## A Fourier Analysis presented using plotting inside the textual framework
 

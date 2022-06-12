@@ -1,5 +1,6 @@
-numpy
 matplotlib
-textual
+numpy
 pre-commit
 pylint
+pytest
+textual
