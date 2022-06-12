@@ -1,0 +1,6 @@
+matplotlib
+numpy
+pre-commit
+pylint
+pytest
+textual

@@ -1,5 +1,5 @@
-import numpy.random as rand
 import numpy as np
+import numpy.random as rand
 
 
 class CosineWave:

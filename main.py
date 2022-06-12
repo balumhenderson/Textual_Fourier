@@ -1,5 +1,5 @@
 from textual.app import App
-from textual.widgets import Placeholder, Button, Header, Footer, ScrollView
+from textual.widgets import Button, Footer, Header, Placeholder, ScrollView
 
 
 class MainApp(App):

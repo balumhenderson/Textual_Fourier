@@ -41,40 +41,41 @@ def freqAnalysis(data, sample_rate):
     return freq
 
 
-linear_signal, input_waves = sg.signalGenerator(time_axis)
+if __name__ == "__main__":
+    linear_signal, input_waves = sg.signalGenerator(time_axis)
 
-# Fourier transform
-output = fft(linear_signal)
-frequencies = freqAnalysis(output, sample_rate)
-half = len(output) // 2
-frequencies_oneside = frequencies[:half]
-output_normalised = output[:half] / half
+    # Fourier transform
+    output = fft(linear_signal)
+    frequencies = freqAnalysis(output, sample_rate)
+    half = len(output) // 2
+    frequencies_oneside = frequencies[:half]
+    output_normalised = output[:half] / half
 
+    # %% ####### Plotting ###########
+    # TODO: Get rid of executable code from main file
+    import plotext as plo
 
-# %% ####### Plotting ###########
-import plotext as plo
+    plo.subplots(3, 1)
+    plo.plotsize(100, 100)
 
-plo.subplots(3, 1)
-plo.plotsize(100, 100)
+    plo.subplot(1, 1)
+    plo.scatter(time_axis, linear_signal)
+    plo.xlabel("Time (s)")
+    plo.ylabel("Signal (a.u.)")
+    plo.title("Random Signal")
+    plo.xticks([0.2 * i for i in range(5)])
+    plo.yticks([4 * i for i in range(-4, 5)])
 
-plo.subplot(1, 1)
-plo.scatter(time_axis, linear_signal)
-plo.xlabel("Time (s)")
-plo.ylabel("Signal (a.u.)")
-plo.title("Random Signal")
-plo.xticks([0.2 * i for i in range(5)])
-plo.yticks([4 * i for i in range(-4, 5)])
+    plo.subplot(2, 1)
 
-plo.subplot(2, 1)
+    plo.plot(frequencies_oneside, abs(output_normalised))
+    plo.xlim(0, 10)
+    plo.xlabel("Frequency (Hz)")
+    plo.ylabel("Normalised Amplitude (a.u.)")
+    plo.title("FFT Results")
+    plo.xticks([2 * i for i in range(8)])
+    plo.yticks([2 * i for i in range(6)])
 
-plo.plot(frequencies_oneside, abs(output_normalised))
-plo.xlim(0, 10)
-plo.xlabel("Frequency (Hz)")
-plo.ylabel("Normalised Amplitude (a.u.)")
-plo.title("FFT Results")
-plo.xticks([2 * i for i in range(8)])
-plo.yticks([2 * i for i in range(6)])
+    plo.subplot(3, 1)
 
-plo.subplot(3, 1)
-
-plo.show()
+    plo.show()
