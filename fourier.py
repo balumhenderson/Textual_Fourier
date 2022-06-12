@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import signalGenerator as sg
 
 plt.style.use("seaborn-poster")
